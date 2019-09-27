@@ -3,6 +3,8 @@ package com.lss.teacher_manager.pojo;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lss.teacher_manager.mybatis.PageParameter;
+import com.lss.teacher_manager.utils.TimeConverter;
+import com.wuwenze.poi.annotation.ExcelField;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -19,10 +21,13 @@ public class BaseDto implements Serializable {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(value = "创建时间", writeConverter = TimeConverter.class)
+
 	private Date createDate;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(value = "修改时间", writeConverter = TimeConverter.class)
 	private Date updateDate;
 
 	private String createBy;

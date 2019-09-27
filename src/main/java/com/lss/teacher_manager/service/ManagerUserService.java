@@ -4,6 +4,7 @@ import com.lss.teacher_manager.exception.APIError;
 import com.lss.teacher_manager.mapper.user.ManagerUserMapper;
 import com.lss.teacher_manager.mapper.user.RoleMapper;
 import com.lss.teacher_manager.mapper.user.UserRoleMapper;
+import com.lss.teacher_manager.pojo.user.CourseDto;
 import com.lss.teacher_manager.pojo.user.ManagerUserDto;
 import com.lss.teacher_manager.pojo.user.RoleDto;
 import com.lss.teacher_manager.pojo.user.UserRoleDto;
@@ -125,4 +126,32 @@ public class ManagerUserService extends BaseUserService {
 //        super.refreshCache("");
     }
 
+    public List<ManagerUserDto> getUsers(){
+        return managerUserMapper.getUsers();
+    }
+
+    //    通过学生id查询该学生的授课教师信息
+    public ManagerUserDto querytByid(String user_id) {
+        return managerUserMapper.querytByid("1");
+    }
+    //    通过学生id查询该学生的课程信息
+    public CourseDto querycByid(String user_id) {
+        //System.out.println(super.getCurrentManagerUser().getUserId());
+        return managerUserMapper.querycByid(user_id);
+    }
+    //    通过院系id查询所有该院系的教师
+    public List<ManagerUserDto> querytBydid(String dept_id){
+        return managerUserMapper.querytBydid(dept_id);
+    }
+
+
+    //查询不同角色的所有用户信息
+    public List<ManagerUserDto> getUserInfoByRolr(String role){
+        return managerUserMapper.getUserInfoByRolr(role);
+    }
+
+    //查询课程
+    public List<CourseDto> getCourse(){
+        return managerUserMapper.getCourse();
+    }
 }

@@ -4,9 +4,11 @@ import com.lss.teacher_manager.controller.BaseController;
 import com.lss.teacher_manager.pojo.user.ManagerUserDto;
 import com.lss.teacher_manager.service.ManagerUserService;
 import com.lss.teacher_manager.service.user.RoleService;
+import com.wuwenze.poi.ExcelKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,8 @@ public class ManagerUserController extends BaseController {
 
     @Autowired
     RoleService roleService;
+
+    private  String message;
 
 
     /**
@@ -140,5 +144,27 @@ public class ManagerUserController extends BaseController {
         return successResult();
     }
 
+    @GetMapping("excel")
+//    @RequiresPermissions("dept:export")
+    public void export( HttpServletResponse response){
+        try {
+            List<ManagerUserDto> users = this.managerUserService.getUsers();
+            ExcelKit.$Export(ManagerUserDto.class, response).downXlsx(users, false);
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
+        }
+    }
 
+    //查询不同角色的所有用户信息
+    @GetMapping("/getUserInfoByRolr")
+    public String getUserInfoByRolr(String role){
+        return listResult(managerUserService.getUserInfoByRolr(role));
+    }
+
+    //查询课程
+    @PostMapping("/getCourse")
+    public String getCourse(){
+        return listResult(managerUserService.getCourse());
+    }
 }

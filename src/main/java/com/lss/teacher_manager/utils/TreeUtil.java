@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TreeUtil {
-    public static <T> List<DeptTree<T>> buildDeptTree(List<DeptTree<T>> nodes) {
+    public static <T> DeptTree<T> buildDeptTree(List<DeptTree<T>> nodes) {
         if (nodes == null) {
             return null;
         }
@@ -23,17 +23,23 @@ public class TreeUtil {
             for (DeptTree<T> n : nodes) {
                 String id = n.getId();
                 if (id != null && id.equals(pid)) {
-                    if (n.getChildren() == null)
-                        n.initChildren();
-                    n.getChildren().add(children);
+                    n.getChilds().add(children);
                     children.setHasParent(true);
                     n.setHasChild(true);
                     return;
                 }
             }
         });
-
-        return result;
+        DeptTree<T> root = new DeptTree<>();
+        root.setId("0");
+        root.setParentId("");
+        root.setHasParent(false);
+        root.setHasChild(true);
+        root.setChecked(true);
+        root.setChilds(result);
+        Map<String, Object> state = new HashMap<>(16);
+        root.setState(state);
+        return root;
     }
 
     public static <T> MenuTree<T> buildMenuTree(List<MenuTree<T>> nodes) {

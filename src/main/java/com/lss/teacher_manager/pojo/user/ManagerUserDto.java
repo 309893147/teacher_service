@@ -1,6 +1,9 @@
 package com.lss.teacher_manager.pojo.user;
 
 import com.lss.teacher_manager.pojo.BaseDto;
+import com.lss.teacher_manager.utils.TimeConverter;
+import com.wuwenze.poi.annotation.Excel;
+import com.wuwenze.poi.annotation.ExcelField;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +13,7 @@ import java.util.Date;
 @Data
 @Getter
 @Setter
+@Excel("用户信息表")
 public class ManagerUserDto extends BaseDto {
 
     // 用户状态：有效
@@ -44,7 +48,7 @@ public class ManagerUserDto extends BaseDto {
     /**
      * 用户名
      */
-
+    @ExcelField(value = "用户名")
     private String username;
 
     /**
@@ -60,33 +64,42 @@ public class ManagerUserDto extends BaseDto {
     private String deptId;
 
     /**
+     * 部门名称
+     */
+    @ExcelField(value = "部门")
+    private transient String deptName;
+
+    /**
      * 邮箱
      */
-
+    @ExcelField(value = "邮箱")
     private String email;
 
     /**
      * 联系电话
      */
 
+    @ExcelField(value = "手机号")
     private String mobile;
 
     /**
      * 状态 0锁定 1有效
      */
 
+    @ExcelField(value = "状态", writeConverterExp = "0=锁定,1=有效")
     private String status;
 
 
     /**
      * 最近访问时间
      */
-
+    @ExcelField(value = "最后登录时间", writeConverter = TimeConverter.class)
     private Date lastLoginDate;
 
     /**
      * 性别 0男 1女 2 保密
      */
+    @ExcelField(value = "性别", writeConverterExp = "0=男,1=女,2=保密")
     private String sex;
 
     /**
@@ -110,15 +123,9 @@ public class ManagerUserDto extends BaseDto {
     /**
      * 描述
      */
-
+    @ExcelField(value = "个人描述")
     private String description;
 
-
-    /**
-     * 部门名称
-     */
-
-    private String deptName;
 
 
     private String createTimeFrom;
@@ -131,195 +138,7 @@ public class ManagerUserDto extends BaseDto {
 
     private String roleId;
 
-
+    @ExcelField(value = "角色")
     private String roleName;
 
-
-    public static String getStatusValid() {
-        return STATUS_VALID;
-    }
-
-    public static String getStatusLock() {
-        return STATUS_LOCK;
-    }
-
-    public static String getDefaultAvatar() {
-        return DEFAULT_AVATAR;
-    }
-
-    public static String getDefaultPassword() {
-        return DEFAULT_PASSWORD;
-    }
-
-    public static String getSexMale() {
-        return SEX_MALE;
-    }
-
-    public static String getSexFemale() {
-        return SEX_FEMALE;
-    }
-
-    public static String getSexUnknow() {
-        return SEX_UNKNOW;
-    }
-
-    public static String getThemeBlack() {
-        return THEME_BLACK;
-    }
-
-    public static String getThemeWhite() {
-        return THEME_WHITE;
-    }
-
-    public static String getTabOpen() {
-        return TAB_OPEN;
-    }
-
-    public static String getTabClose() {
-        return TAB_CLOSE;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getLastLoginDate() {
-        return lastLoginDate;
-    }
-
-    public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
-
-    public String getTab() {
-        return tab;
-    }
-
-    public void setTab(String tab) {
-        this.tab = tab;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getCreateTimeFrom() {
-        return createTimeFrom;
-    }
-
-    public void setCreateTimeFrom(String createTimeFrom) {
-        this.createTimeFrom = createTimeFrom;
-    }
-
-    public String getCreateTimeTo() {
-        return createTimeTo;
-    }
-
-    public void setCreateTimeTo(String createTimeTo) {
-        this.createTimeTo = createTimeTo;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }

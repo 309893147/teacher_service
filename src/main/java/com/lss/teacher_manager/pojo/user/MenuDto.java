@@ -1,9 +1,12 @@
 package com.lss.teacher_manager.pojo.user;
 
 import com.lss.teacher_manager.pojo.BaseDto;
+import com.wuwenze.poi.annotation.Excel;
+import com.wuwenze.poi.annotation.ExcelField;
 import lombok.Data;
 
 @Data
+@Excel("菜单信息表")
 public class MenuDto extends BaseDto {
 
     // 菜单
@@ -27,31 +30,31 @@ public class MenuDto extends BaseDto {
     /**
      * 菜单/按钮名称
      */
-
+    @ExcelField(value = "名称")
     private String menuName;
 
     /**
      * 菜单URL
      */
-
+    @ExcelField(value = "地址")
     private String url;
 
     /**
      * 权限标识
      */
-
+    @ExcelField(value = "权限")
     private String perms;
 
     /**
      * 图标
      */
-
+    @ExcelField(value = "图标")
     private String icon;
 
     /**
      * 类型 0菜单 1按钮
      */
-
+    @ExcelField(value = "类型", writeConverterExp = "0=按钮,1=菜单")
     private String type;
 
     /**

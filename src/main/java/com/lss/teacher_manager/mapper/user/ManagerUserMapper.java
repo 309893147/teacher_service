@@ -2,6 +2,7 @@ package com.lss.teacher_manager.mapper.user;
 
 import com.lss.teacher_manager.mapper.BaseMapper;
 import com.lss.teacher_manager.mapper.BaseProvider;
+import com.lss.teacher_manager.pojo.user.CourseDto;
 import com.lss.teacher_manager.pojo.user.ManagerUserDto;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
@@ -58,7 +59,30 @@ public interface ManagerUserMapper extends BaseMapper<ManagerUserDto> {
     @Override
     ManagerUserDto queryByName(String username);
 
+    @Results({
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "deptId", column = "dept_id"),
+            @Result(property = "createDate", column = "create_date"),
+            @Result(property = "updateDate", column = "update_date"),
+            @Result(property = "lastLoginDate", column = "last_login_date")
+    })
+    @Select("select * from manager_user")
+    List<ManagerUserDto>  getUsers();
 
+    @Results({
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "deptId", column = "dept_id"),
+            @Result(property = "createDate", column = "create_date"),
+            @Result(property = "updateDate", column = "update_date"),
+            @Result(property = "lastLoginDate", column = "last_login_date")
+
+    })
+    @Select("select manager_user.* from manager_user where manager_user.user_id in(SELECT course.uid from course ,`t_connection` where course.cid=`t_connection`.cid and `t_connection`.uid=#{0})")
+    ManagerUserDto querytByid(String user_id);
+    @Select("select course.* from course where course.cid in(SELECT `t_connection`.cid from `t_connection` where `t_connection`.uid=#{0})")
+    CourseDto querycByid(String user_id);
+    @Select("select manager_user.* from manager_user where dept_id=#{dept_id} and role=1")
+    List<ManagerUserDto> querytBydid(String dept_id);
     @Results({
             @Result(property = "userId", column = "user_id"),
             @Result(property = "deptId", column = "dept_id"),
@@ -91,5 +115,26 @@ public interface ManagerUserMapper extends BaseMapper<ManagerUserDto> {
         }
     }
 
+    //查询不同角色的所有用户信息
+    @Results({
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "username", column = "username"),
+            @Result(property = "mobile", column = "mobile"),
+            @Result(property = "roleName", column = "role_name"),
+            @Result(property = "deptName", column = "dept_name"),
+    })
+    @Select("select u.user_id,u.username,u.mobile,r.role_name,d.dept_name from manager_user u left join t_dept d on u.dept_id=d.dept_id left join t_role r on u.role=r.role_id where u.role=#{role}")
+    List<ManagerUserDto> getUserInfoByRolr(String role);
+
+    //查询课程
+    @Results({
+            @Result(property = "cid", column = "cid"),
+            @Result(property = "cname", column = "cname"),
+            @Result(property = "uid", column = "uid"),
+            @Result(property = "deptid", column = "deptid"),
+    })
+
+    @Select("select * from course")
+    List<CourseDto> getCourse();
 
 }

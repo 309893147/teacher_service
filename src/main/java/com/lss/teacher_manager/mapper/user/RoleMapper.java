@@ -39,6 +39,15 @@ public interface RoleMapper {
             @Result(property = "createDate", column = "create_date"),
             @Result(property = "updateDate", column = "update_date")
     })
+    @Select("SELECT * FROM t_role")
+    List<RoleDto> getRoles();
+    @Results({
+            @Result(property = "roleId", column = "role_id"),
+            @Result(property = "roleName", column = "role_name"),
+            @Result(property = "remark", column = "remark"),
+            @Result(property = "createDate", column = "create_date"),
+            @Result(property = "updateDate", column = "update_date")
+    })
     @Select("SELECT r.* FROM t_manager_user_role t LEFT JOIN t_role r ON(t.role_id =r.role_id) WHERE t.user_id =#{0}")
     List<RoleDto> findUserRole(String userId);
 

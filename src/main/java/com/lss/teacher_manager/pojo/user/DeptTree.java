@@ -18,19 +18,38 @@ public class DeptTree<T> implements Serializable {
     private String id;
     private String icon;
     private String href;
-    private String name;
+    private String title;
     private Map<String, Object> state;
     private boolean checked = false;
     private Map<String, Object> attributes;
     /**
      * 子对象
      */
-    private List<DeptTree<T>> children;
+    private List<DeptTree<T>> childs= new ArrayList<>();
+
+
     private String parentId;
     /**
      * 是否有父类
      */
     private boolean hasParent = false;
+
+    public List<DeptTree<T>> getChilds() {
+        return childs;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setChilds(List<DeptTree<T>> childs) {
+        this.childs = childs;
+    }
+
     /**
      * 是否有子类
      */
@@ -40,11 +59,6 @@ public class DeptTree<T> implements Serializable {
      * 最外层对象
      */
     private DeptDto data;
-
-    public void initChildren(){
-        this.children = new ArrayList<>();
-    }
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -73,14 +87,6 @@ public class DeptTree<T> implements Serializable {
         this.href = href;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Map<String, Object> getState() {
         return state;
     }
@@ -105,13 +111,6 @@ public class DeptTree<T> implements Serializable {
         this.attributes = attributes;
     }
 
-    public List<DeptTree<T>> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<DeptTree<T>> children) {
-        this.children = children;
-    }
 
     public String getParentId() {
         return parentId;

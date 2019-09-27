@@ -92,4 +92,8 @@ public class RoleService {
         List<RoleDto> roleDtos = roleMapper.findUserRole(userId);
         return roleDtos;
     }
+
+    public List<RoleDto> getRoles(){
+       return roleMapper.getRoles();
+    }
 }
