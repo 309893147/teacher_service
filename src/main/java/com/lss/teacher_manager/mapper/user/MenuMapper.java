@@ -49,6 +49,26 @@ public interface MenuMapper {
             " LEFT JOIN t_menu m ON(tm.menu_id=m.menu_id) WHERE tu.user_id =#{0} AND m.perms IS NOT NULL AND m.perms!=''")
     List<MenuDto> findUserPermissions(String userId);
 
+
+    @Results({
+            @Result(property = "menuId", column = "menu_id"),
+            @Result(property = "parentId", column = "parent_id"),
+            @Result(property = "menuName", column = "menu_name"),
+            @Result(property = "orderNum", column = "order_num"),
+            @Result(property = "createDate", column = "create_date"),
+            @Result(property = "updateDate", column = "update_date")
+    })
+    @Select("SELECT m.* " +
+            "FROM t_menu m " +
+            "LEFT JOIN t_role_menu rm ON(m.menu_id=rm.menu_id) " +
+            "LEFT JOIN t_role r ON(rm.role_id=r.role_id) " +
+            "LEFT JOIN t_manager_user_role ur ON(r.role_id=ur.role_id) " +
+            "LEFT JOIN manager_user mu ON(ur.user_id=mu.user_id) " +
+            "WHERE m.type ='0' " +
+            "AND mu.user_id=#{0} " +
+            "GROUP BY m.menu_id ")
+    List<MenuDto> getUserMenu(String userId);
+
     class CommonProvider {
 
         public String deleteMenu(Set<String> menuIds){

@@ -15,5 +15,7 @@ public class CourseDto {
 //    院系id
     private String deptid;
 
+    private String username;
+    private String dept_name;
     private  ConnectionDto connectionDto;
 }

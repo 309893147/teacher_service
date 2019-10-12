@@ -94,4 +94,9 @@ public class MenuService {
         List<MenuDto> menuDtos = menuMapper.findUserPermissions(userId);
         return menuDtos;
     }
+
+    public  List<MenuDto> getUserMenu(String userId){
+        List<MenuDto> menuDtos = menuMapper.getUserMenu(userId);
+        return  menuDtos;
+    }
 }

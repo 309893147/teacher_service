@@ -4,10 +4,7 @@ import com.lss.teacher_manager.exception.APIError;
 import com.lss.teacher_manager.mapper.user.ManagerUserMapper;
 import com.lss.teacher_manager.mapper.user.RoleMapper;
 import com.lss.teacher_manager.mapper.user.UserRoleMapper;
-import com.lss.teacher_manager.pojo.user.CourseDto;
-import com.lss.teacher_manager.pojo.user.ManagerUserDto;
-import com.lss.teacher_manager.pojo.user.RoleDto;
-import com.lss.teacher_manager.pojo.user.UserRoleDto;
+import com.lss.teacher_manager.pojo.user.*;
 import com.lss.teacher_manager.utils.SysUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,26 +68,16 @@ public class ManagerUserService extends BaseUserService {
         }
     }
 
-    public void passwordReset(Map<String, Object> requestMap) {
-        String userIds = (String) requestMap.get("userIds");
-        String[] split = userIds.split(",");
-        for (String userId : split) {
-            managerUserMapper.updatePassword(ManagerUserDto.DEFAULT_PASSWORD,userId);
-        }
-    }
+//    public void passwordReset(Map<String, Object> requestMap) {
+//        String userIds = (String) requestMap.get("userIds");
+//        String[] split = userIds.split(",");
+//        for (String userId : split) {
+//            managerUserMapper.updatePassword(ManagerUserDto.DEFAULT_PASSWORD,userId);
+//        }
+//    }
 
-    public void passwordUpdate(Map<String, Object> requestMap) {
-        String userId = (String) requestMap.get("userId");
-        String oldPassword = (String) requestMap.get("oldPassword");
-        String newPassword = (String) requestMap.get("newPassword");
-        ManagerUserDto managerUserDto = managerUserMapper.queryById(userId);
-        if (managerUserDto==null){
-            APIError.NOT_FOUND.expose();
-        }
-        if (!managerUserDto.getPassword().equals(oldPassword)){
-            APIError.CUSTOM.set(400,"密码错误").expose();
-        }
-        managerUserMapper.updatePassword(newPassword,userId);
+    public void passwordUpdate(ManagerUserDto managerUserDto) {
+        managerUserMapper.updatePassword(managerUserDto);
     }
 
     public ManagerUserDto getUserInfo(Map<String, Object> requestMap) {
@@ -135,9 +122,9 @@ public class ManagerUserService extends BaseUserService {
         return managerUserMapper.querytByid("1");
     }
     //    通过学生id查询该学生的课程信息
-    public CourseDto querycByid(String user_id) {
+    public List<ConnectionDto> querycByid(String uid) {
         //System.out.println(super.getCurrentManagerUser().getUserId());
-        return managerUserMapper.querycByid(user_id);
+        return managerUserMapper.querycByid(uid);
     }
     //    通过院系id查询所有该院系的教师
     public List<ManagerUserDto> querytBydid(String dept_id){

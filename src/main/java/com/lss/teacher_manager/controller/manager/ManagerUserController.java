@@ -77,12 +77,12 @@ public class ManagerUserController extends BaseController {
      * @param requestBody
      * @return
      */
-    @PostMapping("/password/reset")
-    public String passwordReset(@RequestBody String requestBody) {
-        Map<String, Object> requestMap = super.getRequestBody(requestBody);
-        managerUserService.passwordReset(requestMap);
-        return successResult();
-    }
+//    @PostMapping("/password/reset")
+//    public String passwordReset(@RequestBody String requestBody) {
+//        Map<String, Object> requestMap = super.getRequestBody(requestBody);
+//        managerUserService.passwordReset(requestMap);
+//        return successResult();
+//    }
 
 
     /**
@@ -92,9 +92,8 @@ public class ManagerUserController extends BaseController {
      * @return
      */
     @PostMapping("/password/update")
-    public String passwordUpdate(@RequestBody String requestBody) {
-        Map<String, Object> requestMap = super.getRequestBody(requestBody);
-        managerUserService.passwordUpdate(requestMap);
+    public String passwordUpdate(@RequestBody ManagerUserDto managerUserDto) {
+        managerUserService.passwordUpdate(managerUserDto);
         return successResult();
     }
 

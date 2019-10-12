@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.lss.teacher_manager.controller.BaseController;
 import com.lss.teacher_manager.exception.APIError;
 import com.lss.teacher_manager.pojo.user.ManagerUserDto;
+import com.lss.teacher_manager.pojo.user.MenuDto;
 import com.lss.teacher_manager.service.ManagerUserService;
 import com.lss.teacher_manager.service.redis.RedisServiceImpl;
 
+import com.lss.teacher_manager.service.user.MenuService;
 import com.lss.teacher_manager.utils.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,6 +31,9 @@ public class ManagerUserLoginController extends BaseController {
 
     @Autowired
     RedisServiceImpl redisService;
+
+    @Autowired
+    MenuService menuService;
 
     @Value("${spring.redis.timeout}")
     long expireTokenTime;
@@ -45,6 +51,9 @@ public class ManagerUserLoginController extends BaseController {
         if (!managerUserDtoDb.getPassword().equals(managerUserDto.getPassword())) {
             APIError.CUSTOM.set(400, "密码错误").expose();
         }
+        List<MenuDto> userMenu = menuService.getUserMenu(managerUserDtoDb.getUserId());
+
+        managerUserDtoDb.setMenuDtos(userMenu);
         String token = EncryptUtil.getMd5((new SimpleDateFormat("yyyyMMddHHmmss")).format(new Date()) + String.valueOf((int) (Math.random() * 900) + 100) + "-" + managerUserDtoDb.getUsername());
         redisService.expier(token, expireTokenTime);
         redisService.set(token, JSONObject.toJSONString(managerUserDtoDb));
