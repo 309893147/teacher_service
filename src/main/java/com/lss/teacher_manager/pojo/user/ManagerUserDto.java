@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -140,5 +141,8 @@ public class ManagerUserDto extends BaseDto {
 
     @ExcelField(value = "角色")
     private String roleName;
+
+    private List<MenuDto> menuDtos;
+
 
 }

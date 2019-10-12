@@ -18,10 +18,10 @@ public interface MenuMapper {
 
 
     @Update("update t_menu set menu_name = #{menuName},icon = #{icon},url = #{url},perms = #{perms}," +
-            "order_num =#{orderNum},update_date =#{updateDate} where menu_id =#{menuId}")
+            "order_num =#{orderNum},update_date =#{updateDate},type =#{type} where menu_id =#{menuId}")
     void updateMenu(MenuDto menuDto);
 
-    @Update("update t_menu set menu_name = #{menuName},perms = #{perms},update_date =#{updateDate} where menu_id =#{menuId}")
+    @Update("update t_menu set menu_name = #{menuName},perms = #{perms},update_date =#{updateDate},type =#{type} where menu_id =#{menuId}")
     void updateButton(MenuDto menuDto);
 
 
@@ -48,6 +48,26 @@ public interface MenuMapper {
             "(r.role_id=tu.role_id) LEFT JOIN t_role_menu tm ON(r.role_id=tm.role_id)" +
             " LEFT JOIN t_menu m ON(tm.menu_id=m.menu_id) WHERE tu.user_id =#{0} AND m.perms IS NOT NULL AND m.perms!=''")
     List<MenuDto> findUserPermissions(String userId);
+
+
+    @Results({
+            @Result(property = "menuId", column = "menu_id"),
+            @Result(property = "parentId", column = "parent_id"),
+            @Result(property = "menuName", column = "menu_name"),
+            @Result(property = "orderNum", column = "order_num"),
+            @Result(property = "createDate", column = "create_date"),
+            @Result(property = "updateDate", column = "update_date")
+    })
+    @Select("SELECT m.* " +
+            "FROM t_menu m " +
+            "LEFT JOIN t_role_menu rm ON(m.menu_id=rm.menu_id) " +
+            "LEFT JOIN t_role r ON(rm.role_id=r.role_id) " +
+            "LEFT JOIN t_manager_user_role ur ON(r.role_id=ur.role_id) " +
+            "LEFT JOIN manager_user mu ON(ur.user_id=mu.user_id) " +
+            "WHERE m.type ='0' " +
+            "AND mu.user_id=#{0} " +
+            "GROUP BY m.menu_id ")
+    List<MenuDto> getUserMenu(String userId);
 
     class CommonProvider {
 
