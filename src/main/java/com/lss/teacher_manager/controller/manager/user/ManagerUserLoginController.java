@@ -52,7 +52,6 @@ public class ManagerUserLoginController extends BaseController {
             APIError.CUSTOM.set(400, "密码错误").expose();
         }
         List<MenuDto> userMenu = menuService.getUserMenu(managerUserDtoDb.getUserId());
-
         managerUserDtoDb.setMenuDtos(userMenu);
         String token = EncryptUtil.getMd5((new SimpleDateFormat("yyyyMMddHHmmss")).format(new Date()) + String.valueOf((int) (Math.random() * 900) + 100) + "-" + managerUserDtoDb.getUsername());
         redisService.expier(token, expireTokenTime);

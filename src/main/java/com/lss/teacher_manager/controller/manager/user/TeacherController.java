@@ -24,6 +24,7 @@ public class TeacherController extends BaseController {
     //查询教师
     @GetMapping("/getTeacherByid")
     public String getTeacherByid(){
+        System.out.println(teacherService.getTeacherByid());
        return successResult(teacherService.getTeacherByid());
     }
 

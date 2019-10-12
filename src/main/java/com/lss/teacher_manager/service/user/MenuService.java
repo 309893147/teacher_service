@@ -95,8 +95,10 @@ public class MenuService {
         return menuDtos;
     }
 
-    public  List<MenuDto> getUserMenu(String userId){
+
+    public  List<MenuDto> getUserMenu(String userId) {
         List<MenuDto> menuDtos = menuMapper.getUserMenu(userId);
-        return  menuDtos;
-    }
+        return menuDtos;
+
 }
+    }

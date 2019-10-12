@@ -18,10 +18,10 @@ public interface MenuMapper {
 
 
     @Update("update t_menu set menu_name = #{menuName},icon = #{icon},url = #{url},perms = #{perms}," +
-            "order_num =#{orderNum},update_date =#{updateDate} where menu_id =#{menuId}")
+            "order_num =#{orderNum},update_date =#{updateDate},type =#{type} where menu_id =#{menuId}")
     void updateMenu(MenuDto menuDto);
 
-    @Update("update t_menu set menu_name = #{menuName},perms = #{perms},update_date =#{updateDate} where menu_id =#{menuId}")
+    @Update("update t_menu set menu_name = #{menuName},perms = #{perms},update_date =#{updateDate},type =#{type} where menu_id =#{menuId}")
     void updateButton(MenuDto menuDto);
 
 

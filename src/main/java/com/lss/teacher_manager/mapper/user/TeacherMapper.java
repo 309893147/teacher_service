@@ -21,7 +21,7 @@ public interface TeacherMapper extends BaseMapper<ManagerUserDto> {
             @Result(property = "roleName", column = "role_name"),
             @Result(property = "deptId", column = "dept_id"),
     })
-    @Select("SELECT m.*,d.dept_name,d.dept_id,r.role_name FROM manager_user m,t_role r,t_dept d WHERE m.user_id=#{user_id} and m.dept_id=d.dept_id and m.role=r.role_id")
+    @Select("SELECT m.*,d.dept_name,d.dept_id,r.role_name FROM manager_user m,t_role r,t_dept d WHERE m.user_id=#{userid} and m.dept_id=d.dept_id and m.role=r.role_id")
     ManagerUserDto getTeacher(String userid);
 
     //修改登录的用户信息

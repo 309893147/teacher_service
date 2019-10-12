@@ -146,4 +146,7 @@ public class ManagerUserDto extends BaseDto {
 
     private List<MenuDto> menuDtos;
 
+    private DeptDto deptDto;
+
+//    private RoleDto roleDto;
 }
